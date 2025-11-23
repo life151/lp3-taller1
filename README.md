@@ -1,8 +1,27 @@
-# API de Videos
-Estudiante:Lina Chamorro
-Universidad: UNIREMINGTON
-Taller:Ip3-taller1
+# API RESTful de Gestión de Videos 🎥
+
+**Desarrollado por:** Lina Chamorro  
+**Proyecto:** Taller 1 — Lenguajes de Programación III  
+**Institución:** Uniremington  
+**Tecnologías:** Python · Flask · Flask-RESTful · SQLAlchemy · Swagger
 Docente:Diego Marin
+---
+
+##  Descripción
+Accede a la documentación Swagger en http://localhost:5000/apidocs
+
+Esta API RESTful permite gestionar un catálogo de videos, ofreciendo operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre recursos audiovisuales. Está construida con Flask y documentada con Swagger para facilitar su exploración y pruebas. El proyecto forma parte del Taller 1 de la asignatura Lenguajes de Programación III, con un enfoque educativo y práctico en el desarrollo de servicios web.
+
+---
+
+##  Instalación y ejecución
+
+1. Clona el repositorio:
+
+```bash
+git clone https://github.com/life151/lp3-taller1.git
+cd lp3-taller1/lp3-taller1
+
 
 Esta es una API RESTful para gestión de videos, desarrollada con Flask, Flask-RESTful y SQLAlchemy.
 
