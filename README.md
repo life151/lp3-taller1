@@ -1,4 +1,8 @@
 # API de Videos
+Estudiante:Lina Chamorro
+Universidad: UNIREMINGTON
+Taller:Ip3-taller1
+Docente:Diego Marin
 
 Esta es una API RESTful para gestión de videos, desarrollada con Flask, Flask-RESTful y SQLAlchemy.
 

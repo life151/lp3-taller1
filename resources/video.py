@@ -1,6 +1,7 @@
 """
 Recursos y rutas para la API de videos
 """
+from flask import jsonify, request
 from flask_restful import Resource, reqparse, abort, fields, marshal_with
 from models.video import VideoModel
 from models import db
@@ -37,7 +38,11 @@ def abort_if_video_doesnt_exist(video_id):
         abort(404, message=f"No se encontró un video con el ID {video_id}")
     return video
 
-class Video(Resource):
+class Videolist(Resource):
+    
+        
+
+    
     """
     Recurso para gestionar videos individuales
     
@@ -47,9 +52,9 @@ class Video(Resource):
         patch: Actualizar un video existente
         delete: Eliminar un video
     """
-    
-    @marshal_with(resource_fields)
-    def get(self, video_id):
+    def get(self):
+        
+        
         """
         Obtiene un video por su ID
         
@@ -60,7 +65,36 @@ class Video(Resource):
             VideoModel: El video solicitado
         """
         # TODO
-        pass
+        # Obtener parámetros de búsqueda y paginación      
+        search = request.args.get('search', '', type=str) 
+        page = request.args.get('page', 1, type=int)
+        per_page = request.args.get('per_page', 10, type=int)
+        
+        # Construir la consulta
+        query = VideoModel.query
+        if search:
+            query = query.filter(VideoModel.name.ilike(f"%{search}%"))
+
+        # Paginación
+        pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+        videos = pagination.items
+        
+
+        result = []
+        for video in videos:
+            result.append({
+                "id": video.id,
+                "name": video.name,
+                "views": video.views,
+                "likes": video.likes
+            })
+
+        return jsonify({
+            "videos": result,
+            "total": pagination.total,
+            "page": page,
+            "per_page": per_page
+        })
     
     @marshal_with(resource_fields)
     def put(self, video_id):
@@ -74,6 +108,10 @@ class Video(Resource):
             VideoModel: El video creado
         """
         # TODO
+        args = video_put_args.parse_args()
+        video = VideoModel(id=video_id, name=args['name'], views=args['views'], likes=args['likes'])
+        db.session.add(video)
+        db.session.commit()
         pass
     
     @marshal_with(resource_fields)
@@ -88,6 +126,16 @@ class Video(Resource):
             VideoModel: El video actualizado
         """
         # TODO
+        args = video_update_args.parse_args()
+        video = abort_if_video_doesnt_exist(video_id)
+        if args['name']:
+            video.name = args['name']
+        if args['views']:
+            video.views = args['views']
+        if args['likes']:
+            video.likes = args['likes']
+        db.session.commit()
+        return video
         pass
     
     def delete(self, video_id):
@@ -101,5 +149,8 @@ class Video(Resource):
             str: Mensaje vacío con código 204
         """
         # TODO
+        video =abort_if_video_doesnt_exist(video_id)
+        db.session.delete(video)
+        db.session.commit()
+        return '', 204
         pass
-

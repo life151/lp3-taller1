@@ -19,7 +19,7 @@ def create_app(config_name='default'):
         Flask: Aplicación Flask configurada
     """
     # TODO: Crear el objeto 'app'
-
+    app = Flask(__name__)
     
     # Cargar configuración
     app.config.from_object(config[config_name])
@@ -29,7 +29,7 @@ def create_app(config_name='default'):
     api = Api(app)
     
     # Registrar rutas
-    api.add_resource(Video, "/api/videos/<int:video_id>")
+    api.add_resource(Video, "/api/videos", "/api/videos/<int:video_id>")
     
     return app
 
