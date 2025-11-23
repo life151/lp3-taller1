@@ -11,7 +11,7 @@ class DevelopmentConfig:
 # Configuración para el entorno de producción
 class ProductionConfig:
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'  # En producción se recomendaría usar una BD más robusta
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'  # En producción se recomienda usar PostgreSQL o MySQL
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Configuración para pruebas
@@ -27,4 +27,3 @@ config = {
     'testing': TestingConfig,
     'default': DevelopmentConfig
 }
-
